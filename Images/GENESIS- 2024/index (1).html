@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akalya Thirumurugan — Design Portfolio</title>
+
+  <!-- FAVICON: uses the "A" initial as SVG favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A0A0A'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='Georgia,serif' font-style='italic' fill='%23FFFFFF'>A</text></svg>"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #FFFFFF;
+      --black: #0A0A0A;
+      --grey-100: #F7F7F7;
+      --grey-200: #EFEFEF;
+      --grey-300: #D8D8D8;
+      --grey-400: #AAAAAA;
+      --grey-600: #666666;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sc:      'Cormorant SC', Georgia, serif;
+      --font-body:    'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────── NAV ─────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 5rem;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--grey-200);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 1.1rem 5rem; }
+    .nav-logo {
+      font-family: var(--font-sc);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 3rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey-600);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--black);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-badge {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid var(--black);
+      color: var(--black);
+      padding: 0.42rem 1.1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-badge:hover { background: var(--black); color: var(--white); cursor: default; }
+
+    /* ─────────────────── HERO ─────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 5rem 5rem;
+      position: relative;
+      border-bottom: 1px solid var(--grey-200);
+      overflow: hidden;
+    }
+    /* Subtle grid texture */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--grey-200) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grey-200) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.63rem;
+      font-weight: 400;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--grey-600);
+      margin-bottom: 2.5rem;
+      position: relative;
+      opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 9vw, 10rem);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      margin-bottom: 1rem;
+      position: relative;
+      opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-name em { font-style: italic; font-weight: 300; }
+    .hero-rule {
+      width: 56px; height: 1px;
+      background: var(--black);
+      margin: 2.5rem auto;
+      position: relative;
+      opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--grey-600);
+      max-width: 520px;
+      line-height: 1.65;
+      margin: 0 auto 3rem;
+      position: relative;
+      opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 1.5rem; justify-content: center; align-items: center;
+      position: relative;
+      opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+    }
+    .btn-primary {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      background: var(--black);
+      color: var(--white);
+      padding: 1rem 2.6rem;
+      text-decoration: none;
+      border: 1px solid var(--black);
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-primary:hover { background: var(--white); color: var(--black); }
+    .btn-secondary {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--grey-600);
+      text-decoration: none;
+      border-bottom: 1px solid var(--grey-300);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--black); border-color: var(--black); }
+
+    .hero-stats {
+      position: absolute; bottom: 4rem; left: 5rem;
+      display: flex; gap: 4rem;
+      opacity: 0; animation: fadeUp 0.9s 1.1s forwards;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--black);
+      display: block;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      margin-top: 0.3rem;
+      display: block;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 4rem; right: 5rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+      opacity: 0; animation: fadeUp 0.9s 1.2s forwards;
+    }
+    .scroll-label {
+      font-family: var(--font-body);
+      font-size: 0.55rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 52px;
+      background: var(--grey-400);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50%       { opacity: 0.3; transform: scaleY(0.35); }
+    }
+
+    /* ─────────────────── MARQUEE ─────────────────── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--grey-200);
+      border-bottom: 1px solid var(--grey-200);
+      padding: 0.9rem 0;
+      background: var(--grey-100);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-item {
+      font-family: var(--font-sc);
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--grey-600);
+      padding: 0 2.5rem;
+      white-space: nowrap;
+    }
+    .marquee-dot { color: var(--black); margin-right: 2.5rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─────────────────── SECTION COMMON ─────────────────── */
+    .section-header { margin-bottom: 4rem; }
+    .s-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .s-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.08;
+      color: var(--black);
+    }
+    .s-title em { font-style: italic; }
+    .s-sub {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--grey-600);
+      line-height: 1.85;
+      max-width: 480px;
+      margin-top: 1rem;
+    }
+
+    /* ─────────────────── WORK ─────────────────── */
+    #work { padding: 7rem 5rem; }
+
+    .filter-bar {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.4rem;
+      border: 1px solid var(--grey-200);
+      background: transparent;
+      color: var(--grey-600);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active,
+    .filter-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .work-card {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      background: var(--grey-100);
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+    }
+    .work-card-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem;
+    }
+    .work-card-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .work-card:hover .work-card-inner img { transform: scale(1.04); }
+    .work-ph-icon { font-size: 2.5rem; }
+    .work-ph-label {
+      font-family: var(--font-body);
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+    .work-hover {
+      position: absolute; inset: 0;
+      background: rgba(10,10,10,0.88);
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: flex-end;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .work-card:hover .work-hover { opacity: 1; }
+    .wh-cat {
+      font-family: var(--font-body);
+      font-size: 0.56rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.4rem;
+    }
+    .wh-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      font-style: italic;
+      line-height: 1.15;
+    }
+    .wh-action {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      padding-bottom: 1px;
+    }
+
+    /* ─────────────────── ABOUT ─────────────────── */
+    #about {
+      padding: 7rem 5rem;
+      border-top: 1px solid var(--grey-200);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-family: var(--font-body);
+      font-size: 0.93rem;
+      font-weight: 300;
+      color: var(--grey-600);
+      line-height: 1.95;
+      margin-bottom: 1.3rem;
+    }
+    .about-text strong { color: var(--black); font-weight: 400; }
+    .skills-heading {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      margin: 2.5rem 0 1rem;
+    }
+    .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-pill {
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      padding: 0.38rem 1rem;
+      border: 1px solid var(--grey-200);
+      color: var(--grey-600);
+      transition: all 0.2s;
+    }
+    .skill-pill:hover { border-color: var(--black); color: var(--black); }
+
+    .timeline {}
+    .tl-item {
+      padding: 0 0 2.5rem 1.75rem;
+      border-left: 1px solid var(--grey-200);
+      position: relative;
+      margin-left: 0.4rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -4px; top: 6px;
+      width: 7px; height: 7px;
+      border: 1px solid var(--black);
+      background: var(--white);
+    }
+    .tl-year {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      margin-bottom: 0.4rem;
+    }
+    .tl-role {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 0.3rem;
+    }
+    .tl-desc {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--grey-600);
+      line-height: 1.65;
+    }
+
+    /* ─────────────────── CONTACT ─────────────────── */
+    #contact {
+      padding: 7rem 5rem;
+      border-top: 1px solid var(--grey-200);
+      background: var(--grey-100);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: start;
+    }
+    .contact-links { margin-top: 2.5rem; display: flex; flex-direction: column; }
+    .c-link {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.3rem 0;
+      border-bottom: 1px solid var(--grey-300);
+      text-decoration: none;
+      transition: padding-left 0.22s;
+    }
+    .c-link:first-child { border-top: 1px solid var(--grey-300); }
+    .c-link:hover { padding-left: 0.6rem; }
+    .c-icon {
+      font-size: 0.95rem;
+      width: 22px; text-align: center;
+      color: var(--grey-400);
+      font-style: normal;
+    }
+    .c-label {
+      font-family: var(--font-body);
+      font-size: 0.56rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .c-value {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--black);
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 1.6rem; }
+    .f-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .f-label {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey-400);
+    }
+    .f-input, .f-textarea {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 300;
+      padding: 0.85rem 0;
+      border: none;
+      border-bottom: 1px solid var(--grey-300);
+      background: transparent;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .f-input:focus, .f-textarea:focus { border-color: var(--black); }
+    .f-input::placeholder, .f-textarea::placeholder { color: var(--grey-400); }
+    .f-textarea { resize: none; min-height: 110px; }
+    .f-submit {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      background: var(--black);
+      color: var(--white);
+      border: 1px solid var(--black);
+      padding: 1rem 2.6rem;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.25s, color 0.25s;
+    }
+    .f-submit:hover { background: transparent; color: var(--black); }
+
+    /* ─────────────────── FOOTER ─────────────────── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 2.5rem 5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .f-name {
+      font-family: var(--font-sc);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.55);
+    }
+    .f-copy {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+    }
+    .f-top {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .f-top:hover { color: var(--white); }
+
+    /* ─────────────────── REVEAL ─────────────────── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.85s, transform 0.85s; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ─────────────────── ANIMATIONS ─────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────── MOBILE ─────────────────── */
+    @media (max-width: 860px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav.scrolled { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 7rem 2rem 6rem; }
+      .hero-stats { left: 2rem; bottom: 3rem; gap: 2.5rem; }
+      .hero-scroll { display: none; }
+      #work { padding: 5rem 1.5rem; }
+      .work-grid { grid-template-columns: 1fr 1fr; }
+      #about { padding: 5rem 1.5rem; grid-template-columns: 1fr; gap: 3rem; }
+      #contact { padding: 5rem 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 520px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Akalya T.</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">Available for Hire</span>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <p class="hero-eyebrow">Brand Designer &nbsp;·&nbsp; Visual Communicator &nbsp;·&nbsp; Chennai, India</p>
+  <h1 class="hero-name"><em>Akalya</em><br>Thirumurugan</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">Crafting identities that speak before words do — through form, contrast, and intention.</p>
+  <div class="hero-cta">
+    <a href="#work" class="btn-primary">View Work</a>
+    <a href="#contact" class="btn-secondary">Get in Touch</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <span class="stat-num">3+</span>
+      <span class="stat-label">Years Designing</span>
+    </div>
+    <div>
+      <span class="stat-num">15+</span>
+      <span class="stat-label">Projects</span>
+    </div>
+    <div>
+      <span class="stat-num">4</span>
+      <span class="stat-label">Brand Clients</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot">—</span>Logo Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Social Media Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Print &amp; Banners</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Stationery &amp; Certificates</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>YouTube Branding</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Visual Communication</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Presentation Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Logo Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Social Media Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Print &amp; Banners</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Stationery &amp; Certificates</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>YouTube Branding</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Visual Communication</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Presentation Design</span>
+  </div>
+</div>
+
+<!-- ── WORK ── -->
+<section id="work">
+  <div class="section-header reveal">
+    <span class="s-eyebrow">Selected Work</span>
+    <h2 class="s-title">Designs that <em>speak</em></h2>
+    <p class="s-sub">Brand identities, social media graphics, print materials, and stationery — a curated selection from the past few years.</p>
+  </div>
+
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" onclick="filterWork('all',this)">All</button>
+    <button class="filter-btn" onclick="filterWork('brand',this)">Brand Identity</button>
+    <button class="filter-btn" onclick="filterWork('social',this)">Social Media</button>
+    <button class="filter-btn" onclick="filterWork('print',this)">Print &amp; Banners</button>
+    <button class="filter-btn" onclick="filterWork('stationery',this)">Stationery</button>
+    <button class="filter-btn" onclick="filterWork('ppt',this)">Presentations</button>
+  </div>
+
+  <div class="work-grid reveal" id="workGrid">
+
+    <!-- ── BRAND IDENTITY ── -->
+    <a href="project-svc.html" class="work-card" data-cat="brand">
+      <div class="work-card-inner">
+        <img src="./Images/SVC/SVC.png" alt="Sacred Vine Church Logo"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Logo Design</span>
+        <p class="wh-title">Sacred Vine Church</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-sm.html" class="work-card" data-cat="brand">
+      <div class="work-card-inner">
+        <img src="./Images/SM/SM1.jpeg" alt="Signature Meat Logo"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Logo Design</span>
+        <p class="wh-title">Signature Meat</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-oac.html" class="work-card" data-cat="brand">
+      <div class="work-card-inner">
+        <img src="./Images/OAC/OAC.png" alt="Obsidian Athletic Club Logo"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Logo Design</span>
+        <p class="wh-title">Obsidian Athletic Club</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-bpc.html" class="work-card" data-cat="brand">
+      <div class="work-card-inner">
+        <img src="./Images/BPC/BPC.jpeg" alt="Boutique Pilates Club Logo"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Logo Design</span>
+        <p class="wh-title">Boutique Pilates Club</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <!-- ── SOCIAL MEDIA ── -->
+    <a href="project-yt.html" class="work-card" data-cat="social">
+      <div class="work-card-inner">
+        <img src="./Images/Yt/Thumnails/Akalya Diaries.png" alt="YouTube Thumbnails"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Social Media</span>
+        <p class="wh-title">YouTube Channel Branding</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-social.html" class="work-card" data-cat="social">
+      <div class="work-card-inner">
+        <img src="./Images/Social media post/smp1.png" alt="Social Media Posts"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Social Media</span>
+        <p class="wh-title">Social Media Posts</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <!-- ── PRINT ── -->
+    <a href="project-posters.html" class="work-card" data-cat="print">
+      <div class="work-card-inner">
+        <img src="./Images/Posters/Poster.png" alt="Posters"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Print Design</span>
+        <p class="wh-title">Posters &amp; Worksheets</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-banners.html" class="work-card" data-cat="print">
+      <div class="work-card-inner">
+        <img src="./Images/Static Banner/1.png" alt="Stage & LED Banners"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Print Design</span>
+        <p class="wh-title">Stage &amp; LED Banners</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-invitations.html" class="work-card" data-cat="print">
+      <div class="work-card-inner">
+        <img src="./Images/Invitation/Asante 1.png" alt="Invitations"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Print Design</span>
+        <p class="wh-title">Invitations &amp; Event Design</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <!-- ── STATIONERY ── -->
+    <a href="project-planners.html" class="work-card" data-cat="stationery">
+      <div class="work-card-inner">
+        <img src="./Images/All in one Dig planner/1.png" alt="Digital Planners"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Stationery</span>
+        <p class="wh-title">All-in-One Digital Planner</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <a href="project-certificates.html" class="work-card" data-cat="stationery">
+      <div class="work-card-inner">
+        <img src="./Images/Certficates/Beige Gold Aesthetic Business Online Course C....png" alt="Certificates"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Stationery</span>
+        <p class="wh-title">Certificates &amp; Cards</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+    <!-- ── PRESENTATION ── -->
+    <a href="project-genesis.html" class="work-card" data-cat="ppt">
+      <div class="work-card-inner">
+        <img src="./Images/GENESIS- 2024/1.png" alt="GENESIS 2024 Presentation"/>
+      </div>
+      <div class="work-hover">
+        <span class="wh-cat">Presentation</span>
+        <p class="wh-title">GENESIS 2024</p>
+        <span class="wh-action">View Project →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-left reveal">
+    <span class="s-eyebrow">About Me</span>
+    <h2 class="s-title" style="margin-bottom:2rem;">Design is how<br><em>I think</em></h2>
+    <div class="about-text">
+      <p>I'm <strong>Akalya Thirumurugan</strong>, a brand designer and visual communicator based in Chennai, India. I started on Upwork creating logos for businesses across fitness, food, faith, and lifestyle — learning early that the best design communicates meaning before it decorates anything.</p>
+      <p>Over the years I've grown into social media design, print materials, stationery, and presentations — always led by the same instinct: clarity over complexity, intention over decoration.</p>
+      <p>I hold a <strong>B.Sc B.Ed in Mathematics</strong> from Central University of Tamil Nadu, and I'm currently self-funding my Masters through freelance design. I'm actively available for brand and graphic design projects.</p>
+    </div>
+    <p class="skills-heading">Tools &amp; Disciplines</p>
+    <div class="skills-list">
+      <span class="skill-pill">Adobe Illustrator</span>
+      <span class="skill-pill">Photoshop</span>
+      <span class="skill-pill">Canva</span>
+      <span class="skill-pill">Figma</span>
+      <span class="skill-pill">Logo Design</span>
+      <span class="skill-pill">Brand Identity</span>
+      <span class="skill-pill">Social Media</span>
+      <span class="skill-pill">Print Design</span>
+      <span class="skill-pill">Typography</span>
+      <span class="skill-pill">Visual Communication</span>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <p class="skills-heading" style="margin-bottom:2rem;">Journey</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="tl-year">2025 — Present</p>
+        <p class="tl-role">Freelance Designer</p>
+        <p class="tl-desc">Open for brand identity, logo, and graphic design projects. Goal: self-fund my Masters degree.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2022 — 2024</p>
+        <p class="tl-role">Logo Designer, Upwork</p>
+        <p class="tl-desc">Delivered end-to-end brand identities for Boutique Pilates Club, Signature Meat, Obsidian Athletic Club, and Sacred Vine Church.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2021 — 2025</p>
+        <p class="tl-role">B.Sc B.Ed Mathematics — CUTN</p>
+        <p class="tl-desc">Central University of Tamil Nadu, Tiruvarur. Designed academic materials, posters, and presentations throughout.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2021</p>
+        <p class="tl-role">Started Designing</p>
+        <p class="tl-desc">Began exploring logo design and visual communication — fell in love with making meaning through form.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="s-eyebrow">Get In Touch</span>
+      <h2 class="s-title">Let's work<br><em>together</em></h2>
+      <p class="s-sub">Available for freelance brand, logo, and graphic design projects. I respond within 24 hours.</p>
+      <div class="contact-links">
+        <a href="mailto:akalyaofficial271@gmail.com" class="c-link">
+          <i class="c-icon">✉</i>
+          <div>
+            <span class="c-label">Email</span>
+            <span class="c-value">akalyaofficial271@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/akalyathirumurugan" target="_blank" rel="noopener" class="c-link">
+          <i class="c-icon">in</i>
+          <div>
+            <span class="c-label">LinkedIn</span>
+            <span class="c-value">linkedin.com/in/akalyathirumurugan</span>
+          </div>
+        </a>
+        <a href="https://www.upwork.com" target="_blank" rel="noopener" class="c-link">
+          <i class="c-icon">↗</i>
+          <div>
+            <span class="c-label">Upwork</span>
+            <span class="c-value">Hire me on Upwork</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="f-group">
+        <label class="f-label" for="name">Your Name</label>
+        <input id="name" type="text" class="f-input" placeholder="Jane Smith"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="email">Email Address</label>
+        <input id="email" type="email" class="f-input" placeholder="jane@company.com"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="type">Project Type</label>
+        <input id="type" type="text" class="f-input" placeholder="Logo, branding, social media…"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="msg">Message</label>
+        <textarea id="msg" class="f-textarea" placeholder="Tell me about your project, timeline, and budget…"></textarea>
+      </div>
+      <button class="f-submit" onclick="handleSubmit(this)">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="f-name">Akalya Thirumurugan</span>
+  <span class="f-copy">© 2025 — All rights reserved</span>
+  <a href="#hero" class="f-top">↑ Back to top</a>
+</footer>
+
+<script>
+  /* Scroll reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* Nav shrink on scroll */
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+    let cur = '';
+    document.querySelectorAll('section[id]').forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = a.getAttribute('href') === '#'+cur ? 'var(--black)' : '';
+    });
+  });
+
+  /* Filter */
+  function filterWork(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.work-card').forEach(c => {
+      c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+  /* Contact form */
+  function handleSubmit(btn) {
+    const name  = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg   = document.getElementById('msg').value.trim();
+    if (!name || !email || !msg) { alert('Please fill in your name, email, and message.'); return; }
+    btn.textContent = '✓ Message Sent';
+    btn.style.background = '#333';
+    setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; }, 3500);
+  }
+</script>
+</body>
+</html>

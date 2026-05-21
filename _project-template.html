@@ -1,0 +1,160 @@
+<!-- PROJECT PAGE TEMPLATE — copy this pattern for every project -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{PROJECT_TITLE}} — Akalya Thirumurugan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* Same base as index — shared styles */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #FFFFFF; --black: #0A0A0A;
+      --grey-100: #F7F7F7; --grey-200: #EFEFEF;
+      --grey-400: #AAAAAA; --grey-600: #666666;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-sc: 'Cormorant SC', serif;
+      --font-body: 'Jost', sans-serif;
+    }
+    body { background: var(--white); color: var(--black); font-family: var(--font-body); font-weight: 300; }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 5rem;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--grey-200);
+    }
+    .nav-logo { font-family: var(--font-sc); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.12em; color: var(--black); text-decoration: none; }
+    .nav-back { font-family: var(--font-body); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-600); text-decoration: none; border-bottom: 1px solid var(--grey-200); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+    .nav-back:hover { color: var(--black); border-color: var(--black); }
+
+    /* PROJECT HERO */
+    .proj-hero {
+      padding: 10rem 5rem 5rem;
+      border-bottom: 1px solid var(--grey-200);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end;
+    }
+    .proj-eyebrow { font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 1rem; }
+    .proj-title { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 6rem); font-weight: 300; line-height: 1; color: var(--black); }
+    .proj-title em { font-style: italic; }
+    .proj-meta { display: flex; flex-direction: column; gap: 1.5rem; }
+    .meta-item {}
+    .meta-label { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 0.3rem; }
+    .meta-value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; color: var(--black); }
+
+    /* IMAGE GRID */
+    .proj-images { padding: 5rem; }
+    .img-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-bottom: 2px; }
+    .img-grid.single { grid-template-columns: 1fr; }
+    .img-grid.three { grid-template-columns: repeat(3, 1fr); }
+    .img-slot {
+      background: var(--grey-100);
+      aspect-ratio: 4/3;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.75rem;
+      position: relative; overflow: hidden;
+    }
+    /* REPLACE: swap this div with <img src="your-image.png" style="width:100%;height:100%;object-fit:cover;"> */
+    .img-slot .ph-emoji { font-size: 2.5rem; }
+    .img-slot .ph-text { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey-400); text-align: center; padding: 0 2rem; }
+    .img-caption {
+      padding: 1.5rem 0 3rem;
+      border-bottom: 1px solid var(--grey-200);
+      margin-bottom: 3rem;
+    }
+    .img-caption h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .img-caption p { font-family: var(--font-body); font-size: 0.88rem; font-weight: 300; color: var(--grey-600); line-height: 1.8; max-width: 640px; }
+
+    /* NEXT PROJECT */
+    .next-proj {
+      padding: 4rem 5rem;
+      border-top: 1px solid var(--grey-200);
+      display: flex; align-items: center; justify-content: space-between;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .next-proj:hover { background: var(--grey-100); }
+    .np-label { font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 0.5rem; }
+    .np-title { font-family: var(--font-display); font-size: 2rem; font-weight: 300; color: var(--black); font-style: italic; }
+    .np-arrow { font-size: 2rem; color: var(--grey-400); }
+
+    footer { background: var(--black); color: var(--white); padding: 2.5rem 5rem; display: flex; align-items: center; justify-content: space-between; }
+    .f-name { font-family: var(--font-sc); font-size: 0.9rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); }
+    .f-back { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .f-back:hover { color: var(--white); }
+
+    @media (max-width: 860px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .proj-hero { padding: 8rem 2rem 3rem; grid-template-columns: 1fr; gap: 2rem; }
+      .proj-images { padding: 3rem 2rem; }
+      .img-grid, .img-grid.three { grid-template-columns: 1fr; }
+      .next-proj { padding: 3rem 2rem; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Akalya T.</a>
+  <a href="index.html#work" class="nav-back">← Back to Work</a>
+</nav>
+
+<!-- PROJECT HEADER -->
+<div class="proj-hero">
+  <div>
+    <p class="proj-eyebrow">{{CATEGORY}}</p>
+    <h1 class="proj-title"><em>{{PROJECT_TITLE}}</em></h1>
+  </div>
+  <div class="proj-meta">
+    <div class="meta-item">
+      <p class="meta-label">Client</p>
+      <p class="meta-value">{{CLIENT}}</p>
+    </div>
+    <div class="meta-item">
+      <p class="meta-label">Year</p>
+      <p class="meta-value">{{YEAR}}</p>
+    </div>
+    <div class="meta-item">
+      <p class="meta-label">Deliverable</p>
+      <p class="meta-value">{{DELIVERABLE}}</p>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGES + CAPTIONS — duplicate this block per image group -->
+<div class="proj-images">
+
+  <div class="img-grid">
+    <div class="img-slot">
+      <!-- REPLACE with: <img src="image1.png" style="width:100%;height:100%;object-fit:cover;"> -->
+      <span class="ph-emoji">🖼️</span>
+      <span class="ph-text">Image 1 — drag & drop your PNG here</span>
+    </div>
+    <div class="img-slot">
+      <span class="ph-emoji">🖼️</span>
+      <span class="ph-text">Image 2 — drag & drop your PNG here</span>
+    </div>
+  </div>
+  <div class="img-caption">
+    <h3>{{IMAGE_GROUP_TITLE}}</h3>
+    <p>{{IMAGE_GROUP_DESCRIPTION}}</p>
+  </div>
+
+</div>
+
+<!-- NEXT PROJECT -->
+<a href="{{NEXT_PROJECT_FILE}}" class="next-proj">
+  <div>
+    <p class="np-label">Next Project</p>
+    <p class="np-title">{{NEXT_PROJECT_TITLE}}</p>
+  </div>
+  <span class="np-arrow">→</span>
+</a>
+
+<footer>
+  <span class="f-name">Akalya Thirumurugan</span>
+  <a href="index.html" class="f-back">← Portfolio Home</a>
+</footer>
+</body>
+</html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akalya Thirumurugan — Design Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A0A0A'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='Georgia,serif' font-style='italic' fill='%23FFFFFF'>A</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #FFFFFF; --black: #0A0A0A;
+      --grey-100: #F4F4F4; --grey-200: #E8E8E8;
+      --grey-300: #C8C8C8; --grey-400: #888888;
+      --grey-600: #444444;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sc:      'Cormorant SC', Georgia, serif;
+      --font-body:    'Jost', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 5rem;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--grey-200); transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 1.1rem 5rem; }
+    .nav-logo { font-family: var(--font-sc); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.14em; color: var(--black); text-decoration: none; }
+    .nav-links { display: flex; gap: 3rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.68rem; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-600);
+      text-decoration: none; transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--black); transform: scaleX(0); transform-origin: left; transition: transform 0.25s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-badge { font-family: var(--font-body); font-size: 0.58rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--black); color: var(--black); padding: 0.42rem 1.1rem; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 8rem 5rem 6rem; position: relative;
+      border-bottom: 1px solid var(--grey-200); overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--grey-200) 1px, transparent 1px), linear-gradient(90deg, var(--grey-200) 1px, transparent 1px);
+      background-size: 60px 60px; opacity: 0.35; pointer-events: none;
+    }
+    .hero-eyebrow { font-family: var(--font-body); font-size: 0.63rem; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 2.5rem; position: relative; opacity: 0; animation: fadeUp 0.9s 0.2s forwards; }
+    .hero-name { font-family: var(--font-display); font-size: clamp(4.5rem, 9vw, 10rem); font-weight: 300; line-height: 0.92; letter-spacing: -0.01em; color: var(--black); margin-bottom: 1rem; position: relative; opacity: 0; animation: fadeUp 0.9s 0.4s forwards; }
+    .hero-name em { font-style: italic; font-weight: 300; }
+    .hero-rule { width: 56px; height: 1px; background: var(--black); margin: 2.5rem auto; position: relative; opacity: 0; animation: fadeUp 0.9s 0.6s forwards; }
+    .hero-tagline { font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.45rem); font-weight: 300; font-style: italic; color: var(--grey-600); max-width: 520px; line-height: 1.65; margin: 0 auto 3rem; position: relative; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; }
+    .hero-cta { display: flex; gap: 1.5rem; justify-content: center; align-items: center; position: relative; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
+    .btn-primary { font-family: var(--font-body); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 1rem 2.6rem; text-decoration: none; border: 1px solid var(--black); transition: background 0.25s, color 0.25s; }
+    .btn-primary:hover { background: var(--white); color: var(--black); }
+    .btn-secondary { font-family: var(--font-body); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: var(--grey-600); text-decoration: none; border-bottom: 1px solid var(--grey-300); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+    .btn-secondary:hover { color: var(--black); border-color: var(--black); }
+    .hero-scroll { position: absolute; bottom: 4rem; right: 5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; opacity: 0; animation: fadeUp 0.9s 1.1s forwards; }
+    .scroll-label { font-family: var(--font-body); font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--grey-400); writing-mode: vertical-rl; }
+    .scroll-line { width: 1px; height: 52px; background: var(--grey-400); animation: scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.3; transform: scaleY(0.35); } }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { overflow: hidden; border-top: 1px solid var(--grey-200); border-bottom: 1px solid var(--grey-200); padding: 0.9rem 0; background: var(--grey-100); }
+    .marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; }
+    .marquee-item { font-family: var(--font-sc); font-size: 0.65rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--grey-600); padding: 0 2.5rem; white-space: nowrap; }
+    .marquee-dot { color: var(--black); margin-right: 2.5rem; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTION COMMON ── */
+    .section-header { margin-bottom: 4rem; }
+    .s-eyebrow { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 0.8rem; display: block; }
+    .s-title { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 300; line-height: 1.08; color: var(--black); }
+    .s-title em { font-style: italic; }
+    .s-sub { font-family: var(--font-body); font-size: 0.9rem; font-weight: 300; color: var(--grey-600); line-height: 1.85; max-width: 480px; margin-top: 1rem; }
+
+    /* ── WORK GRID ── */
+    #work { padding: 7rem 5rem; }
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+    .filter-btn { font-family: var(--font-body); font-size: 0.6rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.5rem 1.4rem; border: 1px solid var(--grey-200); background: transparent; color: var(--grey-600); cursor: pointer; transition: all 0.2s; border-radius: 2px; }
+    .filter-btn.active, .filter-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .work-card {
+      position: relative; cursor: pointer; overflow: hidden;
+      background: var(--grey-100); aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; border-radius: 10px;
+    }
+    .work-card-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; overflow: hidden; }
+    .work-card-inner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .work-card:hover .work-card-inner img { transform: scale(1.05); }
+    .work-hover { position: absolute; inset: 0; background: rgba(10,10,10,0.86); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 2rem; opacity: 0; transition: opacity 0.3s; border-radius: 10px; }
+    .work-card:hover .work-hover { opacity: 1; }
+    .wh-cat { font-family: var(--font-body); font-size: 0.56rem; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0.4rem; }
+    .wh-title { font-family: var(--font-display); font-size: 1.45rem; font-weight: 400; color: var(--white); margin-bottom: 0.6rem; font-style: italic; line-height: 1.15; }
+    .wh-action { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 1px; }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(10,10,10,0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--white);
+      border-radius: 14px;
+      width: 100%; max-width: 860px;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.38s cubic-bezier(0.34,1.2,0.64,1);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+    }
+    .modal-backdrop.open .modal { transform: translateY(0) scale(1); }
+
+    /* Scrollbar inside modal */
+    .modal::-webkit-scrollbar { width: 5px; }
+    .modal::-webkit-scrollbar-thumb { background: var(--grey-300); border-radius: 99px; }
+
+    .modal-close {
+      position: sticky; top: 1.2rem;
+      float: right; margin: 1.2rem 1.2rem 0 0;
+      width: 36px; height: 36px;
+      background: var(--grey-100); border: none; border-radius: 50%;
+      font-size: 1.1rem; cursor: pointer; color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 10;
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--grey-200); }
+
+    .modal-header { padding: 2.2rem 2.5rem 1rem; clear: both; }
+    .modal-eyebrow { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 0.5rem; display: block; }
+    .modal-title { font-family: var(--font-display); font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 300; font-style: italic; line-height: 1.05; color: var(--black); }
+
+    .modal-images {
+      padding: 0 2.5rem;
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .modal-images.cols-1 { grid-template-columns: 1fr; }
+    .modal-images.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .modal-img {
+      width: 100%; border-radius: 8px;
+      object-fit: cover; display: block;
+      background: var(--grey-100);
+      aspect-ratio: 4/3;
+      cursor: zoom-in;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .modal-img:hover { opacity: 0.88; transform: scale(1.012); }
+    .modal-img.tall   { aspect-ratio: 3/4; }
+    .modal-img.wide   { aspect-ratio: 16/9; }
+    .modal-img.square { aspect-ratio: 1/1; }
+
+    /* ── LIGHTBOX (image zoom layer) ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 700;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      background: rgba(8,8,8,0.82);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.28s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    .lightbox-img-wrap {
+      position: relative;
+      max-width: min(92vw, 1200px);
+      max-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+      transform: scale(0.94);
+      transition: transform 0.32s cubic-bezier(0.34,1.18,0.64,1);
+    }
+    .lightbox.open .lightbox-img-wrap { transform: scale(1); }
+
+    .lightbox-img {
+      /* Let the image breathe at its natural ratio — constrained only by viewport */
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.55);
+      object-fit: contain;  /* never crop — show full image */
+    }
+
+    .lightbox-close {
+      position: fixed; top: 1.4rem; right: 1.6rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9); font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 710;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.22); }
+
+    /* Prev / Next arrows */
+    .lightbox-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.85); font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 710; user-select: none;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.22); }
+    .lightbox-prev { left: 1.4rem; }
+    .lightbox-next { right: 1.4rem; }
+
+    /* Counter badge */
+    .lightbox-counter {
+      position: fixed; bottom: 1.6rem; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      z-index: 710;
+    }
+
+    .modal-desc { padding: 1.8rem 2.5rem 2.5rem; }
+    .modal-desc h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; color: var(--black); margin-bottom: 0.6rem; }
+    .modal-desc p { font-family: var(--font-body); font-size: 0.88rem; font-weight: 300; color: var(--grey-600); line-height: 1.85; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .modal-tag { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.9rem; border: 1px solid var(--grey-200); color: var(--grey-400); border-radius: 99px; }
+
+    /* ── ABOUT ── */
+    #about { padding: 7rem 5rem; border-top: 1px solid var(--grey-200); display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start; }
+    .about-text p { font-family: var(--font-body); font-size: 0.93rem; font-weight: 300; color: var(--grey-600); line-height: 1.95; margin-bottom: 1.3rem; }
+    .about-text strong { color: var(--black); font-weight: 400; }
+
+    /* Stats inside About */
+    .about-stats { display: flex; gap: 3rem; margin: 2.5rem 0; padding: 2rem 0; border-top: 1px solid var(--grey-200); border-bottom: 1px solid var(--grey-200); }
+    .astat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 300; line-height: 1; color: var(--black); display: block; }
+    .astat-label { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-400); margin-top: 0.35rem; display: block; }
+
+    .skills-heading { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--grey-400); margin: 2.5rem 0 1rem; }
+    .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-pill { font-family: var(--font-body); font-size: 0.66rem; font-weight: 300; letter-spacing: 0.1em; padding: 0.38rem 1rem; border: 1px solid var(--grey-200); color: var(--grey-600); transition: all 0.2s; border-radius: 2px; }
+    .skill-pill:hover { border-color: var(--black); color: var(--black); }
+    .timeline {}
+    .tl-item { padding: 0 0 2.5rem 1.75rem; border-left: 1px solid var(--grey-200); position: relative; margin-left: 0.4rem; }
+    .tl-item::before { content: ''; position: absolute; left: -4px; top: 6px; width: 7px; height: 7px; border: 1px solid var(--black); background: var(--white); }
+    .tl-year { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-400); margin-bottom: 0.4rem; }
+    .tl-role { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; color: var(--black); margin-bottom: 0.3rem; }
+    .tl-desc { font-family: var(--font-body); font-size: 0.82rem; font-weight: 300; color: var(--grey-600); line-height: 1.65; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 7rem 5rem; border-top: 1px solid var(--grey-200); background: var(--grey-100); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start; }
+    .contact-links { margin-top: 2.5rem; display: flex; flex-direction: column; }
+    .c-link { display: flex; align-items: center; gap: 1.5rem; padding: 1.3rem 0; border-bottom: 1px solid var(--grey-300); text-decoration: none; transition: padding-left 0.22s; }
+    .c-link:first-child { border-top: 1px solid var(--grey-300); }
+    .c-link:hover { padding-left: 0.6rem; }
+    .c-icon { font-size: 0.95rem; width: 22px; text-align: center; color: var(--grey-400); font-style: normal; }
+    .c-label { font-family: var(--font-body); font-size: 0.56rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-400); display: block; margin-bottom: 0.2rem; }
+    .c-value { font-family: var(--font-body); font-size: 0.88rem; font-weight: 300; color: var(--black); }
+    .contact-form { display: flex; flex-direction: column; gap: 1.6rem; }
+    .f-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .f-label { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-400); }
+    .f-input, .f-textarea { font-family: var(--font-body); font-size: 0.88rem; font-weight: 300; padding: 0.85rem 0; border: none; border-bottom: 1px solid var(--grey-300); background: transparent; color: var(--black); outline: none; transition: border-color 0.2s; width: 100%; }
+    .f-input:focus, .f-textarea:focus { border-color: var(--black); }
+    .f-input::placeholder, .f-textarea::placeholder { color: var(--grey-400); }
+    .f-textarea { resize: none; min-height: 110px; }
+    .f-submit { font-family: var(--font-body); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; background: var(--black); color: var(--white); border: 1px solid var(--black); padding: 1rem 2.6rem; cursor: pointer; align-self: flex-start; transition: background 0.25s, color 0.25s; }
+    .f-submit:hover { background: transparent; color: var(--black); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); color: var(--white); padding: 2.5rem 5rem; display: flex; align-items: center; justify-content: space-between; }
+    .f-name { font-family: var(--font-sc); font-size: 0.9rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); }
+    .f-copy { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); }
+    .f-top { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .f-top:hover { color: var(--white); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.85s, transform 0.85s; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── MOBILE ── */
+    @media (max-width: 860px) {
+      nav { padding: 1.2rem 1.5rem; } nav.scrolled { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 7rem 2rem 6rem; } .hero-scroll { display: none; }
+      #work { padding: 5rem 1.5rem; } .work-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      #about { padding: 5rem 1.5rem; grid-template-columns: 1fr; gap: 3rem; }
+      .about-stats { gap: 2rem; }
+      #contact { padding: 5rem 1.5rem; } .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .modal { max-width: 100%; border-radius: 10px; }
+      .modal-images { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 520px) { .work-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Akalya T.</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">Available for Hire</span>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <p class="hero-eyebrow">Brand Designer &nbsp;·&nbsp; Visual Communicator &nbsp;·&nbsp; Chennai, India</p>
+  <h1 class="hero-name"><em>Akalya</em><br>Thirumurugan</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">Crafting identities that speak before words do — through form, contrast, and intention.</p>
+  <div class="hero-cta">
+    <a href="#work" class="btn-primary">View Work</a>
+    <a href="#contact" class="btn-secondary">Get in Touch</a>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot">—</span>Logo Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Social Media Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Print &amp; Banners</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Stationery &amp; Certificates</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>YouTube Branding</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Visual Communication</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Presentation Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Logo Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Social Media Design</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Print &amp; Banners</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Stationery &amp; Certificates</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>YouTube Branding</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Visual Communication</span>
+    <span class="marquee-item"><span class="marquee-dot">—</span>Presentation Design</span>
+  </div>
+</div>
+
+<!-- ── WORK ── -->
+<section id="work">
+  <div class="section-header reveal">
+    <span class="s-eyebrow">Selected Work</span>
+    <h2 class="s-title">Designs that <em>speak</em></h2>
+    <p class="s-sub">Brand identities, social media graphics, print materials, and stationery — a curated selection from the past few years.</p>
+  </div>
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" onclick="filterWork('all',this)">All</button>
+    <button class="filter-btn" onclick="filterWork('brand',this)">Brand Identity</button>
+    <button class="filter-btn" onclick="filterWork('social',this)">Social Media</button>
+    <button class="filter-btn" onclick="filterWork('print',this)">Print &amp; Banners</button>
+    <button class="filter-btn" onclick="filterWork('stationery',this)">Stationery</button>
+    <button class="filter-btn" onclick="filterWork('ppt',this)">Presentations</button>
+  </div>
+  <div class="work-grid reveal" id="workGrid">
+
+    <!-- BRAND IDENTITY -->
+    <div class="work-card" data-cat="brand" onclick="openModal('svc')">
+      <div class="work-card-inner"><img src="./Images/SVC/SVC.png" alt="Sacred Vine Church"/></div>
+      <div class="work-hover"><span class="wh-cat">Logo Design</span><p class="wh-title">Sacred Vine Church</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="brand" onclick="openModal('sm')">
+      <div class="work-card-inner"><img src="./Images/SM/SM1.jpeg" alt="Signature Meat"/></div>
+      <div class="work-hover"><span class="wh-cat">Logo Design</span><p class="wh-title">Signature Meat</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="brand" onclick="openModal('oac')">
+      <div class="work-card-inner"><img src="./Images/OAC/OAC.png" alt="Obsidian Athletic Club"/></div>
+      <div class="work-hover"><span class="wh-cat">Logo Design</span><p class="wh-title">Obsidian Athletic Club</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="brand" onclick="openModal('bpc')">
+      <div class="work-card-inner"><img src="./Images/BPC/BPC.jpeg" alt="Boutique Pilates Club"/></div>
+      <div class="work-hover"><span class="wh-cat">Logo Design</span><p class="wh-title">Boutique Pilates Club</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="brand" onclick="openModal('ytlogo')">
+      <div class="work-card-inner"><img src="./Images/Yt/Logo/CHAPTER UP.png" alt="YouTube Logos"/></div>
+      <div class="work-hover"><span class="wh-cat">Logo Design</span><p class="wh-title">YouTube Channel Logos</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="work-card" data-cat="social" onclick="openModal('yt')">
+      <div class="work-card-inner"><img src="./Images/Yt/Thumnails/Productive Days in My Life.png" alt="YouTube Thumbnails"/></div>
+      <div class="work-hover"><span class="wh-cat">Social Media</span><p class="wh-title">YouTube Channel Branding</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="social" onclick="openModal('social')">
+      <div class="work-card-inner"><img src="./Images/Social media post/smp1.png" alt="Social Media Posts"/></div>
+      <div class="work-hover"><span class="wh-cat">Social Media</span><p class="wh-title">Social Media Posts</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <!-- PRINT -->
+    <div class="work-card" data-cat="print" onclick="openModal('posters')">
+      <div class="work-card-inner"><img src="./Images/Posters/Poster.png" alt="Posters"/></div>
+      <div class="work-hover"><span class="wh-cat">Print Design</span><p class="wh-title">Posters &amp; Worksheets</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="print" onclick="openModal('banners')">
+      <div class="work-card-inner"><img src="./Images/Static Banner/1.png" alt="Banners"/></div>
+      <div class="work-hover"><span class="wh-cat">Print Design</span><p class="wh-title">Stage &amp; LED Banners</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="print" onclick="openModal('invitations')">
+      <div class="work-card-inner"><img src="./Images/Invitation/Asante 1.png" alt="Invitations"/></div>
+      <div class="work-hover"><span class="wh-cat">Print Design</span><p class="wh-title">Invitations &amp; Event Design</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <!-- STATIONERY -->
+    <div class="work-card" data-cat="stationery" onclick="openModal('planners')">
+      <div class="work-card-inner"><img src="./Images/All in one Dig planner/1.png" alt="Digital Planners"/></div>
+      <div class="work-hover"><span class="wh-cat">Stationery</span><p class="wh-title">All-in-One Digital Planner</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <div class="work-card" data-cat="stationery" onclick="openModal('certificates')">
+      <div class="work-card-inner"><img src="./Images/Certficates/Copy of Cream Gold Modern Participation Certificate.png" alt="Certificates"/></div>
+      <div class="work-hover"><span class="wh-cat">Stationery</span><p class="wh-title">Certificates &amp; Cards</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+    <!-- PRESENTATION -->
+    <div class="work-card" data-cat="ppt" onclick="openModal('genesis')">
+      <div class="work-card-inner"><img src="./Images/GENESIS- 2024/1.png" alt="GENESIS 2024"/></div>
+      <div class="work-hover"><span class="wh-cat">Presentation</span><p class="wh-title">GENESIS 2024</p><span class="wh-action">View Project →</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-left reveal">
+    <span class="s-eyebrow">About Me</span>
+    <h2 class="s-title" style="margin-bottom:2rem;">Design is how<br><em>I think</em></h2>
+    <div class="about-text">
+      <p>I'm <strong>Akalya Thirumurugan</strong>, a brand designer and visual communicator based in Chennai, India. I started on Upwork creating logos for businesses across fitness, food, faith, and lifestyle — learning early that the best design communicates meaning before it decorates anything.</p>
+      <p>Over the years I've grown into social media design, print materials, stationery, and presentations — always led by the same instinct: clarity over complexity, intention over decoration.</p>
+      <p>I hold a <strong>B.Sc B.Ed in Mathematics</strong> from Central University of Tamil Nadu, and I'm currently self-funding my Masters through freelance design. I'm actively available for brand and graphic design projects.</p>
+    </div>
+    <!-- Stats moved here from hero -->
+    <div class="about-stats">
+      <div><span class="astat-num">3+</span><span class="astat-label">Years Designing</span></div>
+      <div><span class="astat-num">15+</span><span class="astat-label">Projects Delivered</span></div>
+      <div><span class="astat-num">4</span><span class="astat-label">Brand Clients</span></div>
+    </div>
+    <p class="skills-heading">Tools &amp; Disciplines</p>
+    <div class="skills-list">
+      <span class="skill-pill">Adobe Illustrator</span>
+      <span class="skill-pill">Photoshop</span>
+      <span class="skill-pill">Canva</span>
+      <span class="skill-pill">Figma</span>
+      <span class="skill-pill">Logo Design</span>
+      <span class="skill-pill">Brand Identity</span>
+      <span class="skill-pill">Social Media</span>
+      <span class="skill-pill">Print Design</span>
+      <span class="skill-pill">Typography</span>
+      <span class="skill-pill">Visual Communication</span>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <p class="skills-heading" style="margin-bottom:2rem;">Journey</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="tl-year">2025 — Present</p>
+        <p class="tl-role">Freelance Designer</p>
+        <p class="tl-desc">Open for brand identity, logo, and graphic design projects. Goal: self-fund my Masters degree.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2022 — 2024</p>
+        <p class="tl-role">Logo Designer, Upwork</p>
+        <p class="tl-desc">Delivered end-to-end brand identities for Boutique Pilates Club, Signature Meat, Obsidian Athletic Club, and Sacred Vine Church.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2021 — 2025</p>
+        <p class="tl-role">B.Sc B.Ed Mathematics — CUTN</p>
+        <p class="tl-desc">Central University of Tamil Nadu, Tiruvarur. Designed academic materials, posters, and presentations throughout.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2021</p>
+        <p class="tl-role">Started Designing</p>
+        <p class="tl-desc">Began exploring logo design and visual communication — fell in love with making meaning through form.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="s-eyebrow">Get In Touch</span>
+      <h2 class="s-title">Let's work<br><em>together</em></h2>
+      <p class="s-sub">Available for freelance brand, logo, and graphic design projects. I respond within 24 hours.</p>
+      <div class="contact-links">
+        <a href="mailto:akalyaofficial271@gmail.com" class="c-link">
+          <i class="c-icon">✉</i>
+          <div><span class="c-label">Email</span><span class="c-value">akalyaofficial271@gmail.com</span></div>
+        </a>
+        <a href="https://www.linkedin.com/in/akalyathirumurugan" target="_blank" rel="noopener" class="c-link">
+          <i class="c-icon">in</i>
+          <div><span class="c-label">LinkedIn</span><span class="c-value">linkedin.com/in/akalyathirumurugan</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="f-group"><label class="f-label" for="cname">Your Name</label><input id="cname" type="text" class="f-input" placeholder="Jane Smith"/></div>
+      <div class="f-group"><label class="f-label" for="cemail">Email Address</label><input id="cemail" type="email" class="f-input" placeholder="jane@company.com"/></div>
+      <div class="f-group"><label class="f-label" for="ctype">Project Type</label><input id="ctype" type="text" class="f-input" placeholder="Logo, branding, social media…"/></div>
+      <div class="f-group"><label class="f-label" for="cmsg">Message</label><textarea id="cmsg" class="f-textarea" placeholder="Tell me about your project, timeline, and budget…"></textarea></div>
+      <button class="f-submit" onclick="handleSubmit(this)">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="f-name">Akalya Thirumurugan</span>
+  <span class="f-copy">© 2026 — All rights reserved</span>
+  <a href="#hero" class="f-top">↑ Back to top</a>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     LIGHTBOX — full natural-dimension image viewer
+     ════════════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close lightbox">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lightboxStep(-1, event)" aria-label="Previous">‹</button>
+  <div class="lightbox-img-wrap">
+    <img class="lightbox-img" id="lightboxImg" src="" alt=""/>
+  </div>
+  <button class="lightbox-nav lightbox-next" onclick="lightboxStep(1, event)" aria-label="Next">›</button>
+  <span class="lightbox-counter" id="lightboxCounter"></span>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MODAL BACKDROP
+     ════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <div class="modal-header">
+      <span class="modal-eyebrow" id="mEyebrow"></span>
+      <h2 class="modal-title" id="mTitle"></h2>
+    </div>
+    <div class="modal-images" id="mImages"></div>
+    <div class="modal-desc">
+      <h3 id="mDescTitle"></h3>
+      <p id="mDescBody"></p>
+      <div class="modal-tags" id="mTags"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   LIGHTBOX
+   ══════════════════════════════════════════ */
+let lbImages  = [];   // [{src, alt}, ...] for current open modal
+let lbCurrent = 0;
+
+function openLightbox(images, startIndex) {
+  lbImages  = images;
+  lbCurrent = startIndex;
+  _lbRender();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden'; // already hidden by modal, stays hidden
+}
+
+function _lbRender() {
+  const img = document.getElementById('lightboxImg');
+  const cur = lbImages[lbCurrent];
+  img.src = cur.src;
+  img.alt = cur.alt;
+  document.getElementById('lightboxCounter').textContent =
+    lbImages.length > 1 ? `${lbCurrent + 1} / ${lbImages.length}` : '';
+  // Show/hide arrows
+  document.querySelector('.lightbox-prev').style.display = lbImages.length > 1 ? '' : 'none';
+  document.querySelector('.lightbox-next').style.display = lbImages.length > 1 ? '' : 'none';
+}
+
+function lightboxStep(dir, e) {
+  if (e) e.stopPropagation();
+  lbCurrent = (lbCurrent + dir + lbImages.length) % lbImages.length;
+  // Quick fade swap
+  const img = document.getElementById('lightboxImg');
+  img.style.opacity = '0';
+  setTimeout(() => { _lbRender(); img.style.opacity = '1'; img.style.transition = 'opacity 0.18s'; }, 140);
+  img.style.transition = 'opacity 0.14s';
+}
+
+function closeLightbox(e) {
+  if (e) e.stopPropagation();
+  document.getElementById('lightbox').classList.remove('open');
+  // body overflow stays hidden — modal is still open underneath
+}
+
+function handleLightboxClick(e) {
+  // Click on the dark backdrop (not the image) → close lightbox only
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+// Keyboard: arrow keys navigate, Escape closes lightbox (not modal)
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (lb.classList.contains('open')) {
+    if (e.key === 'ArrowRight') lightboxStep(1);
+    else if (e.key === 'ArrowLeft') lightboxStep(-1);
+    else if (e.key === 'Escape') closeLightbox();
+    return;
+  }
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ══════════════════════════════════════════
+   PROJECT DATA
+   ══════════════════════════════════════════ */
+/* ── Project data ── */
+const projects = {
+  svc: {
+    eyebrow: 'Logo Design · Brand Identity',
+    title: 'Sacred Vine Church',
+    cols: 2,
+    images: [
+      { src: './Images/SVC/SVC.png', alt: 'SVC Logo', ratio: 'square' },
+      { src: './Images/SVC/SVC1.jpeg', alt: 'SVC Brand 1', ratio: '' },
+      { src: './Images/SVC/SVC2.jpeg', alt: 'SVC Brand 2', ratio: '' },
+      { src: './Images/SVC/SVC3.jpeg', alt: 'SVC Brand 3', ratio: '' },
+    ],
+    descTitle: 'Sacred Vine Church — Brand Identity',
+    desc: 'A full brand identity for Sacred Vine Church, built around themes of faith, community, and growth. The logomark uses organic vine motifs intertwined with a cross, communicating spiritual depth with a modern, welcoming aesthetic.',
+    tags: ['Logo Design', 'Brand Identity', 'Church Branding', 'Illustrator']
+  },
+  sm: {
+    eyebrow: 'Logo Design · Brand Identity',
+    title: 'Signature Meat',
+    cols: 2,
+    images: [
+      { src: './Images/SM/SM1.jpeg', alt: 'SM Logo', ratio: '' },
+      { src: './Images/SM/SM2.jpeg', alt: 'SM Brand', ratio: '' },
+      { src: './Images/SM/SM3.jpeg', alt: 'SM Mockup', ratio: '' },
+    ],
+    descTitle: 'Signature Meat — Premium Butcher Brand',
+    desc: 'Logo and brand identity for Signature Meat, a premium butcher and meat delivery brand. The design language balances bold confidence with artisanal quality — conveying freshness, heritage, and trust.',
+    tags: ['Logo Design', 'Food & Beverage', 'Brand Identity', 'Illustrator']
+  },
+  oac: {
+    eyebrow: 'Logo Design · Brand Identity',
+    title: 'Obsidian Athletic Club',
+    cols: 2,
+    images: [
+      { src: './Images/OAC/OAC.png', alt: 'OAC Logo', ratio: 'square' },
+      { src: './Images/OAC/OAC6.png', alt: 'T-Shirt Mockup', ratio: '' },
+      { src: './Images/OAC/Obsidian Athletic club (1).jpg', alt: 'Brand View', ratio: '' },
+      { src: './Images/OAC/Obsidian athletic club bag mockup.png', alt: 'Bag Mockup', ratio: '' },
+    ],
+    descTitle: 'Obsidian Athletic Club — Fitness Brand',
+    desc: 'A strong, dark-toned brand identity for Obsidian Athletic Club. The wordmark and logomark draw from the raw energy of obsidian stone — power, edge, and precision — applied across apparel mockups and merchandise.',
+    tags: ['Logo Design', 'Sports Branding', 'Merchandise', 'Mockups']
+  },
+  bpc: {
+    eyebrow: 'Logo Design · Brand Identity',
+    title: 'Boutique Pilates Club',
+    cols: 2,
+    images: [
+      { src: './Images/BPC/BPC.jpeg', alt: 'BPC Logo', ratio: '' },
+      { src: './Images/BPC/BPC1.jpeg', alt: 'BPC Brand 1', ratio: '' },
+      { src: './Images/BPC/BPC2.jpeg', alt: 'BPC Brand 2', ratio: '' },
+      { src: './Images/BPC/BPC3.jpeg', alt: 'BPC Brand 3', ratio: '' },
+      { src: './Images/BPC/BPC4.jpeg', alt: 'BPC Brand 4', ratio: '' },
+    ],
+    descTitle: 'Boutique Pilates Club — Wellness Brand',
+    desc: 'Elegant, minimal brand identity for a boutique pilates studio. Soft curves, refined typography, and an understated colour palette communicate grace, precision, and the elevated feel of a premium wellness space.',
+    tags: ['Logo Design', 'Wellness', 'Minimal Design', 'Brand Identity']
+  },
+  ytlogo: {
+    eyebrow: 'Logo Design · YouTube',
+    title: 'YouTube Channel Logos',
+    cols: 2,
+    images: [
+      { src: './Images/Yt/Logo/CHAPTER UP.png', alt: 'Chapter Up', ratio: 'square' },
+      { src: './Images/Yt/Logo/Akalya Diaries (1).png', alt: 'Akalya Diaries Logo', ratio: 'square' },
+      { src: './Images/Yt/Logo/Pages of Mine.png', alt: 'Pages of Mine', ratio: 'square' },
+      { src: './Images/Yt/Logo/B.png', alt: 'Logo B', ratio: 'square' },
+      { src: './Images/Yt/Logo/1.png', alt: 'Logo 1', ratio: 'square' },
+      { src: './Images/Yt/Logo/2.png', alt: 'Logo 2', ratio: 'square' },
+    ],
+    descTitle: 'YouTube Channel Logos',
+    desc: 'A collection of logo designs for personal YouTube channels — each with a distinct personality. From study vlogs to lifestyle content, each mark was crafted to be immediately recognisable at small thumbnail scale.',
+    tags: ['Logo Design', 'YouTube', 'Personal Brand', 'Digital']
+  },
+  yt: {
+    eyebrow: 'Social Media · YouTube',
+    title: 'YouTube Channel Branding',
+    cols: 2,
+    images: [
+      { src: './Images/Yt/Thumnails/Akalya Diaries.png', alt: 'Thumbnail 1', ratio: '' },
+      { src: './Images/Yt/Thumnails/Productive Days in My Life.png', alt: 'Thumbnail 2', ratio: '' },
+      { src: './Images/Yt/Thumnails/9 Effective.png', alt: 'Thumbnail 3', ratio: '' },
+      { src: './Images/Yt/Thumnails/StudyVlog of Upsc aspirant.png', alt: 'Thumbnail 4', ratio: '' },
+      { src: './Images/Yt/Thumnails/Hostel Room Tour CUTN.png', alt: 'Thumbnail 5', ratio: '' },
+      { src: './Images/Yt/Thumnails/Mother\'s Day.png', alt: 'Thumbnail 6', ratio: '' },
+      { src: './Images/Yt/Thumnails/Central University of Tamilnadu.png', alt: 'Thumbnail 7', ratio: '' },
+      { src: './Images/Yt/Thumnails/CentRAL UNIVERSITY OF TAMILNADU LIBRAR....png', alt: 'Thumbnail 8', ratio: '' },
+    ],
+    descTitle: 'YouTube Channel Branding & Thumbnails',
+    desc: 'Complete thumbnail suite for personal YouTube channels. Each design is optimised for high click-through — bold typography, strong focal points, and consistent colour language that builds recognisable channel identity across all videos.',
+    tags: ['Thumbnail Design', 'YouTube Branding', 'Social Media', 'Canva']
+  },
+  social: {
+    eyebrow: 'Social Media Design',
+    title: 'Social Media Posts',
+    cols: 3,
+    images: [
+      { src: './Images/Social media post/smp1.png', alt: 'SMP 1', ratio: 'square' },
+      { src: './Images/Social media post/smp2.png', alt: 'SMP 2', ratio: 'square' },
+      { src: './Images/Social media post/smp3.png', alt: 'SMP 3', ratio: 'square' },
+      { src: './Images/Social media post/smp4.png', alt: 'SMP 4', ratio: 'square' },
+      { src: './Images/Social media post/smp5.png', alt: 'SMP 5', ratio: 'square' },
+      { src: './Images/Social media post/smp6.png', alt: 'SMP 6', ratio: 'square' },
+      { src: './Images/Social media post/smp7.png', alt: 'SMP 7', ratio: 'square' },
+      { src: './Images/Social media post/smp8.png', alt: 'SMP 8', ratio: 'square' },
+      { src: './Images/Social media post/1.png', alt: 'Post 1', ratio: 'square' },
+      { src: './Images/Social media post/2.png', alt: 'Post 2', ratio: 'square' },
+      { src: './Images/Social media post/3.png', alt: 'Post 3', ratio: 'square' },
+      { src: './Images/Social media post/4.png', alt: 'Post 4', ratio: 'square' },
+    ],
+    descTitle: 'Social Media Post Design',
+    desc: 'A range of social media graphics designed for various brands and pages — covering educational content, promotional posts, and engagement creatives. Consistent visual systems ensure brand coherence across every post.',
+    tags: ['Instagram', 'Social Media', 'Canva', 'Graphic Design']
+  },
+  posters: {
+    eyebrow: 'Print Design · Posters',
+    title: 'Posters & Worksheets',
+    cols: 2,
+    images: [
+      { src: './Images/Posters/Poster.png', alt: 'Poster 1', ratio: '' },
+      { src: './Images/Posters/1.png', alt: 'Poster 2', ratio: '' },
+      { src: './Images/Posters/2.png', alt: 'Poster 3', ratio: '' },
+      { src: './Images/Posters/3.png', alt: 'Poster 4', ratio: '' },
+      { src: './Images/Posters/4.png', alt: 'Poster 5', ratio: '' },
+      { src: './Images/Posters/Purple White and Blue Birthday Invitation.png', alt: 'Birthday Poster', ratio: '' },
+      { src: './Images/Posters/SCIVISTA\'24 (1).png', alt: 'SCIVISTA Poster', ratio: '' },
+    ],
+    descTitle: 'Posters, Flyers & Event Graphics',
+    desc: 'Print and digital poster designs spanning event promotions, academic functions, and social campaigns. Designed to communicate clearly at a glance — with strong hierarchy, intentional colour, and bold composition.',
+    tags: ['Poster Design', 'Print', 'Event Graphics', 'Canva']
+  },
+  banners: {
+    eyebrow: 'Print Design · Banners',
+    title: 'Stage & LED Banners',
+    cols: 1,
+    images: [
+      { src: './Images/Static Banner/1.png', alt: 'Banner 1', ratio: 'wide' },
+      { src: './Images/Static Banner/2.png', alt: 'Banner 2', ratio: 'wide' },
+    ],
+    descTitle: 'Stage & LED Banner Design',
+    desc: 'Large-format banner designs for stage backdrops and LED screens. Built for high visibility at events — typographically balanced, spatially composed, and print-ready at large scale.',
+    tags: ['Banner Design', 'Large Format', 'Print', 'Event Design']
+  },
+  invitations: {
+    eyebrow: 'Print Design · Invitations',
+    title: 'Invitations & Event Design',
+    cols: 2,
+    images: [
+      { src: './Images/Invitation/Asante 1.png', alt: 'Asante 1', ratio: '' },
+      { src: './Images/Invitation/Asante 2.png', alt: 'Asante 2', ratio: '' },
+      { src: './Images/Invitation/Asante.png', alt: 'Asante', ratio: '' },
+      { src: './Images/Invitation/Asante3.png', alt: 'Asante 3', ratio: '' },
+      { src: './Images/Invitation/1.png', alt: 'Invite 1', ratio: '' },
+      { src: './Images/Invitation/2.png', alt: 'Invite 2', ratio: '' },
+      { src: './Images/Invitation/3.png', alt: 'Invite 3', ratio: '' },
+      { src: './Images/Invitation/4.png', alt: 'Invite 4', ratio: '' },
+      { src: './Images/Invitation/Central University of Tamil Nadu.png', alt: 'CUTN Invite', ratio: '' },
+      { src: './Images/Invitation/Purple and White Simple Business Webinar Invi....png', alt: 'Webinar Invite', ratio: '' },
+    ],
+    descTitle: 'Invitations & Event Stationery',
+    desc: 'Elegant invitation and event graphic design — from personal celebrations to institutional functions. Each piece is crafted with attention to tone, occasion, and the feeling the recipient should experience on opening it.',
+    tags: ['Invitation Design', 'Event Stationery', 'Print', 'Canva']
+  },
+  planners: {
+    eyebrow: 'Stationery · Digital',
+    title: 'All-in-One Digital Planner',
+    cols: 2,
+    images: [
+      { src: './Images/All in one Dig planner/1.png', alt: 'Planner Cover', ratio: '' },
+      { src: './Images/All in one Dig planner/2.png', alt: 'Planner 2', ratio: '' },
+      { src: './Images/All in one Dig planner/13.png', alt: 'Planner 13', ratio: '' },
+      { src: './Images/All in one Dig planner/14.png', alt: 'Planner 14', ratio: '' },
+      { src: './Images/All in one Dig planner/15.png', alt: 'Daily Page', ratio: '' },
+      { src: './Images/All in one Dig planner/16.png', alt: 'Weekly Page', ratio: '' },
+      { src: './Images/All in one Dig planner/Month.png', alt: 'Month View', ratio: '' },
+      { src: './Images/All in one Dig planner/Week.png', alt: 'Week View', ratio: '' },
+      { src: './Images/All in one Dig planner/Habit.png', alt: 'Habit Tracker', ratio: '' },
+      { src: './Images/All in one Dig planner/Goal.png', alt: 'Goal Page', ratio: '' },
+      { src: './Images/All in one Dig planner/Journal.png', alt: 'Journal Page', ratio: '' },
+      { src: './Images/All in one Dig planner/Reflec.png', alt: 'Reflection Page', ratio: '' },
+      { src: './Images/All in one Dig planner/Fin-1.png', alt: 'Finance 1', ratio: '' },
+      { src: './Images/All in one Dig planner/Year.png', alt: 'Year View', ratio: '' },
+    ],
+    descTitle: 'All-in-One Digital Planner',
+    desc: 'A comprehensive digital planner system designed for productivity and intentional living. Includes daily, weekly, monthly, and yearly views alongside habit trackers, goal pages, journaling spreads, and finance templates — all with a cohesive, minimal aesthetic.',
+    tags: ['Digital Planner', 'Stationery Design', 'Productivity', 'Canva']
+  },
+  certificates: {
+    eyebrow: 'Stationery · Certificates',
+    title: 'Certificates & Cards',
+    cols: 1,
+    images: [
+      { src: './Images/Certficates/Beige Gold Aesthetic Business Online Course C....png', alt: 'Certificate 1', ratio: 'wide' },
+      { src: './Images/Certficates/Blue Minimalist Certificate Of Achievement.png', alt: 'Certificate 2', ratio: 'wide' },
+      { src: './Images/Certficates/Copy of Cream Gold Modern Participation Certificate.png', alt: 'Certificate 3', ratio: 'wide' },
+    ],
+    descTitle: 'Certificate & Award Design',
+    desc: 'Formal certificate designs for courses, achievements, and participation awards. Each design balances officialness with elegance — premium typography, gold accents, and clean layout that feels worthy of the achievement it recognises.',
+    tags: ['Certificate Design', 'Stationery', 'Print', 'Canva']
+  },
+  genesis: {
+    eyebrow: 'Presentation Design',
+    title: 'GENESIS 2024',
+    cols: 2,
+    images: [
+      { src: './Images/GENESIS- 2024/1.png', alt: 'GENESIS Slide 1', ratio: 'wide' },
+      { src: './Images/GENESIS- 2024/2.png', alt: 'GENESIS Slide 2', ratio: 'wide' },
+    ],
+    descTitle: 'GENESIS 2024 — Event Presentation',
+    desc: 'Presentation design for GENESIS 2024, a university-level event. Slides were designed to be visually impactful on large screens — strong typographic hierarchy, cohesive colour language, and a layout system that guides the audience through content clearly.',
+    tags: ['Presentation', 'Event Design', 'Slide Design', 'Canva']
+  }
+};
+
+/* ── Modal logic ── */
+function openModal(id) {
+  const p = projects[id];
+  if (!p) return;
+  document.getElementById('mEyebrow').textContent = p.eyebrow;
+  document.getElementById('mTitle').textContent = p.title;
+  document.getElementById('mDescTitle').textContent = p.descTitle;
+  document.getElementById('mDescBody').textContent = p.desc;
+
+  // Tags
+  const tagsEl = document.getElementById('mTags');
+  tagsEl.innerHTML = p.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+
+  // Images
+  const imgEl = document.getElementById('mImages');
+  imgEl.className = 'modal-images' + (p.cols === 1 ? ' cols-1' : p.cols === 3 ? ' cols-3' : '');
+  imgEl.innerHTML = p.images.map((img, i) =>
+    `<img src="${img.src}" alt="${img.alt}" class="modal-img${img.ratio ? ' '+img.ratio : ''}" loading="lazy"
+      onerror="this.style.display='none'"
+      onclick="openLightbox(window._currentModalImages, ${i})"
+      title="Click to view full image">`
+  ).join('');
+  // Store images array on window for lightbox access
+  window._currentModalImages = p.images.map(img => ({ src: img.src, alt: img.alt }));
+
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  // Also close lightbox if it's open
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── Nav shrink ── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── Filter ── */
+function filterWork(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.work-card').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+/* ── Contact form ── */
+function handleSubmit() {
+  const name  = document.getElementById('cname').value.trim();
+  const email = document.getElementById('cemail').value.trim();
+  const msg   = document.getElementById('cmsg').value.trim();
+  if (!name || !email || !msg) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
+  // Clear all fields
+  document.getElementById('cname').value  = '';
+  document.getElementById('cemail').value = '';
+  document.getElementById('ctype').value  = '';
+  document.getElementById('cmsg').value   = '';
+  // Swap form → success
+  document.getElementById('formFields').style.display  = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+function resetForm() {
+  document.getElementById('formFields').style.display  = '';
+  document.getElementById('formSuccess').style.display = 'none';
+}
+</script>
+</body>
+</html>
