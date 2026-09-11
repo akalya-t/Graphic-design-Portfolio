@@ -196,7 +196,6 @@
     .lightbox.open .lightbox-img-wrap { transform: scale(1); }
 
     .lightbox-img {
-      /* Let the image breathe at its natural ratio — constrained only by viewport */
       max-width: 100%;
       max-height: 90vh;
       width: auto;
@@ -204,7 +203,7 @@
       display: block;
       border-radius: 6px;
       box-shadow: 0 40px 100px rgba(0,0,0,0.55);
-      object-fit: contain;  /* never crop — show full image */
+      object-fit: contain;
     }
 
     .lightbox-close {
@@ -218,7 +217,6 @@
     }
     .lightbox-close:hover { background: rgba(255,255,255,0.22); }
 
-    /* Prev / Next arrows */
     .lightbox-nav {
       position: fixed; top: 50%; transform: translateY(-50%);
       width: 44px; height: 44px; border-radius: 50%;
@@ -232,7 +230,6 @@
     .lightbox-prev { left: 1.4rem; }
     .lightbox-next { right: 1.4rem; }
 
-    /* Counter badge */
     .lightbox-counter {
       position: fixed; bottom: 1.6rem; left: 50%; transform: translateX(-50%);
       font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.22em;
@@ -251,7 +248,6 @@
     .about-text p { font-family: var(--font-body); font-size: 0.93rem; font-weight: 300; color: var(--grey-600); line-height: 1.95; margin-bottom: 1.3rem; }
     .about-text strong { color: var(--black); font-weight: 400; }
 
-    /* Stats inside About */
     .about-stats { display: flex; gap: 3rem; margin: 2.5rem 0; padding: 2rem 0; border-top: 1px solid var(--grey-200); border-bottom: 1px solid var(--grey-200); }
     .astat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 300; line-height: 1; color: var(--black); display: block; }
     .astat-label { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-400); margin-top: 0.35rem; display: block; }
@@ -491,14 +487,19 @@
     <p class="skills-heading" style="margin-bottom:2rem;">Journey</p>
     <div class="timeline">
       <div class="tl-item">
-        <p class="tl-year">2025 — Present</p>
-        <p class="tl-role">Freelance Designer</p>
-        <p class="tl-desc">Open for brand identity, logo, and graphic design projects. Goal: self-fund my Masters degree.</p>
+        <p class="tl-year">Jun 2025 — Jan 2026</p>
+        <p class="tl-role">Frontend Developer</p>
+        <p class="tl-desc">Self-employed. Building React/Vite web apps and portfolio sites via Antigravity for independent clients.</p>
       </div>
       <div class="tl-item">
-        <p class="tl-year">2022 — 2024</p>
+        <p class="tl-year">Apr 2023 — Apr 2025</p>
+        <p class="tl-role">Tutor, Chegg India</p>
+        <p class="tl-desc">Part-time, remote. Supported students in mathematics while continuing freelance design work.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">Nov 2022 — May 2024</p>
         <p class="tl-role">Logo Designer, Upwork</p>
-        <p class="tl-desc">Delivered end-to-end brand identities for Boutique Pilates Club, Signature Meat, Obsidian Athletic Club, and Sacred Vine Church.</p>
+        <p class="tl-desc">Freelance, remote. Delivered end-to-end brand identities for Boutique Pilates Club, Signature Meat, Obsidian Athletic Club, and Sacred Vine Church.</p>
       </div>
       <div class="tl-item">
         <p class="tl-year">2021 — 2025</p>
@@ -603,7 +604,6 @@ function _lbRender() {
   img.alt = cur.alt;
   document.getElementById('lightboxCounter').textContent =
     lbImages.length > 1 ? `${lbCurrent + 1} / ${lbImages.length}` : '';
-  // Show/hide arrows
   document.querySelector('.lightbox-prev').style.display = lbImages.length > 1 ? '' : 'none';
   document.querySelector('.lightbox-next').style.display = lbImages.length > 1 ? '' : 'none';
 }
@@ -611,7 +611,6 @@ function _lbRender() {
 function lightboxStep(dir, e) {
   if (e) e.stopPropagation();
   lbCurrent = (lbCurrent + dir + lbImages.length) % lbImages.length;
-  // Quick fade swap
   const img = document.getElementById('lightboxImg');
   img.style.opacity = '0';
   setTimeout(() => { _lbRender(); img.style.opacity = '1'; img.style.transition = 'opacity 0.18s'; }, 140);
@@ -621,15 +620,12 @@ function lightboxStep(dir, e) {
 function closeLightbox(e) {
   if (e) e.stopPropagation();
   document.getElementById('lightbox').classList.remove('open');
-  // body overflow stays hidden — modal is still open underneath
 }
 
 function handleLightboxClick(e) {
-  // Click on the dark backdrop (not the image) → close lightbox only
   if (e.target === document.getElementById('lightbox')) closeLightbox();
 }
 
-// Keyboard: arrow keys navigate, Escape closes lightbox (not modal)
 document.addEventListener('keydown', e => {
   const lb = document.getElementById('lightbox');
   if (lb.classList.contains('open')) {
@@ -644,7 +640,6 @@ document.addEventListener('keydown', e => {
 /* ══════════════════════════════════════════
    PROJECT DATA
    ══════════════════════════════════════════ */
-/* ── Project data ── */
 const projects = {
   svc: {
     eyebrow: 'Logo Design · Brand Identity',
@@ -867,11 +862,9 @@ function openModal(id) {
   document.getElementById('mDescTitle').textContent = p.descTitle;
   document.getElementById('mDescBody').textContent = p.desc;
 
-  // Tags
   const tagsEl = document.getElementById('mTags');
   tagsEl.innerHTML = p.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
 
-  // Images
   const imgEl = document.getElementById('mImages');
   imgEl.className = 'modal-images' + (p.cols === 1 ? ' cols-1' : p.cols === 3 ? ' cols-3' : '');
   imgEl.innerHTML = p.images.map((img, i) =>
@@ -880,7 +873,6 @@ function openModal(id) {
       onclick="openLightbox(window._currentModalImages, ${i})"
       title="Click to view full image">`
   ).join('');
-  // Store images array on window for lightbox access
   window._currentModalImages = p.images.map(img => ({ src: img.src, alt: img.alt }));
 
   document.getElementById('modalBackdrop').classList.add('open');
@@ -888,7 +880,6 @@ function openModal(id) {
 }
 
 function closeModal() {
-  // Also close lightbox if it's open
   document.getElementById('lightbox').classList.remove('open');
   document.getElementById('modalBackdrop').classList.remove('open');
   document.body.style.overflow = '';
@@ -930,12 +921,10 @@ function handleSubmit() {
     alert('Please fill in your name, email, and message.');
     return;
   }
-  // Clear all fields
   document.getElementById('cname').value  = '';
   document.getElementById('cemail').value = '';
   document.getElementById('ctype').value  = '';
   document.getElementById('cmsg').value   = '';
-  // Swap form → success
   document.getElementById('formFields').style.display  = 'none';
   document.getElementById('formSuccess').style.display = 'block';
 }
